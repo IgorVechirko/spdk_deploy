@@ -1,0 +1,13 @@
+{
+	"spdk_path" : "/root/wc/sw_spdk",
+	"ip" : "192.168.0.100",
+	"nqn" : "nqn.2016-06.sw.ha:node",
+	"ha_header" : "/root/wc/ha/ha_header.json",
+	"spdk_conf" : "/root/wc/ha/spdk_conf.json",
+	"ha_name" : "Ha0",
+	"ha_dev_id" : 1,
+	"ha_size" : "1GiB",
+	"local_node_id" : 1,
+	"local_node_bdev" : "local_node",
+	"exe_name" : "nvmf_cpp_tgt"
+}
