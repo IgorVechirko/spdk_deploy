@@ -9,5 +9,6 @@
 	"ha_size" : "1GiB",
 	"local_node_id" : 1,
 	"local_node_bdev" : "local_node",
+	"local_node_nsid" : 1,
 	"exe_name" : "nvmf_cpp_tgt"
 }
