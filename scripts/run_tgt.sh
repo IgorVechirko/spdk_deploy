@@ -7,6 +7,8 @@ get_var() {
 	echo $var_val
 }
 
+sudo sh kill_tgt.sh
+
 self_path=$(pwd)
 
 cd $(get_var "spdk_path")
@@ -14,8 +16,8 @@ cd $(get_var "spdk_path")
 sudo ./scripts/setup.sh cleanup
 sudo HUGEMEM=4096 ./scripts/setup.sh
 
-cd build/bin
+cd $(get_var "bin_path")
 
-sudo ./$(get_var "exe_name") > out.log 2>&1 &
+sudo ./$(get_var "exe_name") > $(get_var "log_file") 2>&1 &
 
 cd $self_path
