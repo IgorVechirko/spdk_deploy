@@ -12,7 +12,7 @@ sudo ./scripts/rpc.py nvmf_create_subsystem nqn.2016-06.sw.ha:node -a -s SPDK000
 sudo ./scripts/rpc.py bdev_ha_create_header /root/wc/ha/ha_header.json --device_id 1 --device_size 1GiB --local_node_id 1 --local_node_type SYNC_REPLICA --local_node_nqn nqn.2016-06.sw.ha:node --ha_creation_action create_new --local_node_data_replica ram_bdev
 sudo ./scripts/rpc.py bdev_ha_create Ha0 /root/wc/ha/ha_header.json
 
-#sudo ./scripts/rpc.py nvmf_subsystem_add_listener nqn.2016-06.sw.ha:node -t rdma-a 192.168.0.10 -s 4421
+#sudo ./scripts/rpc.py nvmf_subsystem_add_listener nqn.2016-06.sw.ha:node -t rdma -a 192.168.0.10 -s 4421
 sudo ./scripts/rpc.py nvmf_subsystem_add_listener nqn.2016-06.sw.ha:node -t tcp -a 192.168.0.102 -s 4421
 sudo ./scripts/rpc.py nvmf_subsystem_add_listener nqn.2016-06.sw.ha:node -t tcp -a 192.168.0.102 -s 4430
 
