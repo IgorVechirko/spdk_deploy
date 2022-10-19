@@ -1,8 +1,8 @@
 #!/bin/bash
 
-sh create_ha.sh
-sh connect_remote_nodes.sh
-sh add_witness.sh
-sh raft_set.sh
+sh kill_tgt.sh $1
+sh copy_build.sh $1
+sh run_tgt.sh $1
+#sh setup_spdk.sh $1
 
 
