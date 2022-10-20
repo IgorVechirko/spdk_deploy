@@ -7,10 +7,47 @@ get_var() {
 	echo $var_val
 }
 
+get_node() {
+
+	if [ "$2" ]
+	then
+		target_node=$1
+		field=$2
+	else
+		field=$1
+	fi
+
+	if [ "$target_node" ]
+	then
+
+		nodes=$(get_var "nodes")
+		nodes_count=$(echo $nodes | jq 'length')
+
+		for node_idx in `seq 0 $(($nodes_count-1))`
+		do
+			node_inf=$(echo $nodes|jq ".[$node_idx]" -r)
+			node_id=$(echo $node_inf|jq '.id')
+
+			if [ $node_id -eq $target_node ]
+			then
+				value=$(echo $node_inf|jq ".$field" -r)
+			fi
+		done
+	fi
+
+	if [ "$value" ] && [ "$value" != "null" ]
+	then
+		echo $value
+	else
+		get_var "defaults.$field"
+	fi
+}
+
+
 self_path=$(pwd)
 
-cd $(get_var "spdk_path")
+cd $(get_node $1 "spdk_path")
 
-sudo ./scripts/rpc.py bdev_ha_delete $(get_var "ha_name") --delete_storage --delete_header
+sudo ./scripts/rpc.py bdev_ha_delete $(get_var "ha.name") --delete_storage --delete_header
 
 cd $self_path

@@ -21,9 +21,14 @@
 		"ftp_passwd": "1234",
 		"ftp_dest_path": "/root/wc/sw_spdk/build/bin/",
 
-		"ram_bdev": "ram_bdev",
+		"ram_bdev":{
+			"name": "ram_bdev",
+			"size": 1024,
+			"block_size": 512
+		},
 		"nvme_bdev":
 		{
+			"prefix": "Nvme0",
 			"name": "Nvme0n1",
 			"controller": "0000:00:0e.0"
 		}

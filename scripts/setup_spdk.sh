@@ -50,39 +50,43 @@ cd $(get_node $1 "spdk_path")
 sudo ./scripts/rpc.py nvmf_create_transport -t TCP
 sudo ./scripts/rpc.py nvmf_create_transport -t RDMA
 
-#if [ $(get_node $1 "ram_bdev") != "null" ]
-#then
-#	sudo ./scripts/rpc.py bdev_malloc_create -b $(get_node $1 "ram_bdev") 1024 512
-#elif [ $(get_node $1 "nvme_bdev.name") != "null")
-#then
-#	sudo ./scripts/rpc.py bdev_nvme_attach_controller -b Nvme0 -t PCIe -a 0000:00:0e.0
-#fi
+if [ '$(get_node $1 "ram_bdev.name")' != "null" ]
+then
+	sudo ./scripts/rpc.py bdev_malloc_create -b $(get_node $1 "ram_bdev.name") $(get_node $1 "ram_bdev.size") $(get_node $1 "ram_bdev.block_size")
+elif [ '$(get_node $1 "nvme_bdev.name")' != "null" ]
+then
+	sudo ./scripts/rpc.py bdev_nvme_attach_controller -b $(get_node $1 "nvme_bdev.prefix") -t PCIe -a $(get_node $1 "nvme_bdev.controller")
+fi
 
 sudo ./scripts/rpc.py nvmf_create_subsystem $(get_var "ha.nqn") -a -s SPDK00000000000001 -d SPDK_Controller1 --ana-reporting
 
 partners_channels=$(get_node $1 "partners_channels")
-echo $partners_channels
 channels_count=$(echo $partners_channels|jq 'length')
-echo $channels_count
 for ch_idx in `seq 0 $(($channels_count-1))`
 do
-	echo $ch_idx
 	channel=$(echo $partners_channels|jq ".[$ch_idx]")
-
-	echo $channel
 
 	rpc_args="nvmf_subsystem_add_listener $(get_var 'ha.nqn')"
 	rpc_args="$rpc_args -t $(echo $channel|jq '.type' -r)"
 	rpc_args="$rpc_args -a $(echo $channel|jq '.address' -r)"
 	rpc_args="$rpc_args -s $(echo $channel|jq '.port' -r)"
 
-	echo $rpc_args
+	sudo ./scripts/rpc.py $rpc_args
+done
+
+clients_channels=$(get_node $1 "clients_channels")
+channels_count=$(echo $clients_channels|jq 'length')
+for ch_idx in `seq 0 $(($channels_count-1))`
+do
+	channel=$(echo $clients_channels|jq ".[$ch_idx]")
+
+	rpc_args="nvmf_subsystem_add_listener $(get_var 'ha.nqn')"
+	rpc_args="$rpc_args -t $(echo $channel|jq '.type' -r)"
+	rpc_args="$rpc_args -a $(echo $channel|jq '.address' -r)"
+	rpc_args="$rpc_args -s $(echo $channel|jq '.port' -r)"
 
 	sudo ./scripts/rpc.py $rpc_args
 done
 
-
-#sudo ./scripts/rpc.py nvmf_subsystem_add_listener $(get_var "nqn") -t tcp -a $(get_var "ip") -s 4421
-#sudo ./scripts/rpc.py nvmf_subsystem_add_listener $(get_var "nqn") -t tcp -a $(get_var "ip") -s 4430
 
 cd $self_path

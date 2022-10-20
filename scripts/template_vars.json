@@ -1,16 +1,140 @@
 {
-	"spdk_path" : "../sw_spdk",
-	"bin_path": "/root/wc/sw_spdk/build/bin",
-	"ip" : "192.168.0.103",
-	"nqn" : "nqn.2016-06.sw.ha1:node",
-	"ha_header" : "/root/wc/ha/ha1_header.json",
-	"spdk_conf" : "/root/wd/ha/spdk_conf.json",
-	"ha_name" : "Ha1",
-	"ha_dev_id" : 1,
-	"ha_size" : "1GiB",
-	"local_node_id" : 2,
-	"local_node_bdev" : "ha1_2_node",
-	"local_node_nsid" : 1,
-	"exe_name" : "nvmf_cpp_tgt",
-	"log_file": "/root/wc/ha/tgt_output.log"
+	"ha":
+	{
+		"name" : "Ha1",
+		"nqn" : "nqn.2016-06.sw.ha1:node",
+		"id" : 1,
+		"size" : "1GiB"
+	},
+
+	"defaults":
+	{
+		"HUGEMEM": 2048,
+		"spdk_path": "/root/wc/sw_spdk",
+		"bin_path": "/root/wc/sw_spdk/build/bin",
+		"exe_name": "nvmf_cpp_tgt",
+		"header_path": "/root/wc/ha/ha1_header.json",
+		"spdk_conf": "/root/wd/ha/spdk_conf.json",
+		"log_file": "/root/wc/ha/tgt_output.log",
+		"bin_ftp_path": "ftp://192.168.0.102/wc/sw_spdk/build/bin/",
+		"ftp_user": "root",
+		"ftp_passwd": "1234",
+		"ftp_dest_path": "/root/wc/sw_spdk/build/bin/",
+
+		"ram_bdev":{
+			"name": "ram_bdev",
+			"size": 1024,
+			"block_size": 512
+		},
+		"nvme_bdev":
+		{
+			"prefix": "Nvme0",
+			"name": "Nvme0n1",
+			"controller": "0000:00:0e.0"
+		}
+	},
+
+	"nodes":
+	[
+		{
+			"id": 1,
+			"ns_id": 1,
+			"partners_channels":
+			[
+				{
+					"type": "tcp",
+					"address": "192.168.0.102",
+					"port": "4421"
+				},
+				{
+					"type": "tcp",
+					"address": "192.168.0.102",
+					"port": "4431"
+				}
+			],
+			"clients_channels":
+			[
+				{
+					"type": "tcp",
+					"address": "192.168.0.102",
+					"port": "4420"
+				},
+				{
+					"type": "tcp",
+					"address": "192.168.0.102",
+					"port": "4430"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"ns_id": 1,
+			"partners_channels":
+			[
+				{
+					"type": "tcp",
+					"address": "192.168.0.103",
+					"port": "4421"
+				},
+				{
+					"type": "tcp",
+					"address": "192.168.0.103",
+					"port": "4431"
+				}
+			],
+			"clients_channels":
+			[
+				{
+					"type": "tcp",
+					"address": "192.168.0.103",
+					"port": "4420"
+				},
+				{
+					"type": "tcp",
+					"address": "192.168.0.103",
+					"port": "4430"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"ns_id": 1,
+			"partners_channels":
+			[
+				{
+					"type": "tcp",
+					"address": "192.168.0.131",
+					"port": "4421"
+				},
+				{
+					"type": "tcp",
+					"address": "192.168.0.131",
+					"port": "4431"
+				}
+			],
+			"clients_channels":
+			[
+				{
+					"type": "tcp",
+					"address": "192.168.0.131",
+					"port": "4420"
+				},
+				{
+					"type": "tcp",
+					"address": "192.168.0.131",
+					"port": "4430"
+				}
+			]
+		}
+	],
+
+	"smb_witness":
+	{
+		"domain": "",
+		"username": "root",
+		"passwd": "1234",
+		"server": "192.168.0.131",
+		"share": "witness_share",
+		"path": ""
+	}
 }
