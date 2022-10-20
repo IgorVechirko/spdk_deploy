@@ -9,31 +9,36 @@ get_var() {
 
 get_node() {
 
-	nodes=$(get_var "nodes")
-	nodes_count=$(echo $nodes | jq 'length')
+	if [ "$2" ]
+	then
+		target_node=$1
+		field=$2
+	else
+		field=$1
+	fi
 
+	if [ "$target_node" ]
+	then
 
-	for node_idx in `seq 0 $(($nodes_count-1))`
-	do
-		node_inf=$(echo $nodes|jq ".[$node_idx]" -r)
-		node_id=$(echo $node_inf|jq '.id')
+		nodes=$(get_var "nodes")
+		nodes_count=$(echo $nodes | jq 'length')
 
-		if [ $node_id -eq $1 ]
-		then
-			value=$(echo $node_inf|jq ".$2" -r)
+		for node_idx in `seq 0 $(($nodes_count-1))`
+		do
+			node_inf=$(echo $nodes|jq ".[$node_idx]" -r)
+			node_id=$(echo $node_inf|jq '.id')
 
-			if [ $value = "null" ]
+			if [ $node_id -eq $target_node ]
 			then
-				get_var "defaults.$2"
-			else
-				echo $value
+				value=$(echo $node_inf|jq ".$field" -r)
 			fi
-		fi
-	done
+		done
+	fi
+
+	if [ "$value" ] && [ "$value" != "null" ]
+	then
+		echo $value
+	else
+		get_var "defaults.$field"
+	fi
 }
-
-self_path=$(pwd)
-
-
-
-cd $self_path

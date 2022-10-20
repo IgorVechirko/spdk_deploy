@@ -1,17 +1,16 @@
 #!/bin/bash
 
-vars=$(sudo cat ./vars.json)
+. ./base.sh
 
-get_var() {
-	var_val=$(echo $vars|jq ".$1" -r)
-	echo $var_val
-}
+
+echo "Adding smb witness..."
 
 self_path=$(pwd)
 
-cd $(get_var "spdk_path")
+cd $(get_node $1 "spdk_path")
 
-sudo ./scripts/rpc.py bdev_ha_add_witness_node $(get_var "ha_name") --witness-node-domain "" --witness-node-username "igor" --witness-node-password "1234" --witness-node-server "192.168.0.131" --witness-node-share "witness_share" --witness-node-path ""
+rpc_args="bdev_ha_add_raft_smb_witness $(get_var 'ha.name') --witness-domain \"$(get_var 'smb_witness.domain')\" --witness-username \"$(get_var 'smb_witness.username')\" --witness-password \"$(get_var 'smb_witness.passwd')\" --witness-server \"$(get_var 'smb_witness.server')\" --witness-share \"$(get_var 'smb_witness.share')\" --witness-path \"$(get_var 'smb_witness.path')\""
 
+sudo echo ${rpc_args}|xargs python3 -u ./scripts/rpc.py
 
 cd $self_path
