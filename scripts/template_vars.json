@@ -4,7 +4,8 @@
 		"name" : "Ha1",
 		"nqn" : "nqn.2016-06.sw.ha1:node",
 		"id" : 1,
-		"size" : "1GiB"
+		"size" : "1GiB",
+		"uuid": "6d28acdf-7d3e-49b2-ac07-f5678160d7c3"
 	},
 
 	"defaults":
@@ -16,7 +17,7 @@
 		"header_path": "/root/wc/ha/ha1_header.json",
 		"spdk_conf": "/root/wd/ha/spdk_conf.json",
 		"log_file": "/root/wc/ha/tgt_output.log",
-		"bin_ftp_path": "ftp://192.168.0.102/wc/sw_spdk/build/bin/",
+		"bin_ftp_path": "ftp://10.10.10.2/wc/sw_spdk/build/bin/",
 		"ftp_user": "root",
 		"ftp_passwd": "1234",
 		"ftp_dest_path": "/root/wc/sw_spdk/build/bin/",
@@ -43,26 +44,16 @@
 			[
 				{
 					"type": "tcp",
-					"address": "192.168.0.102",
+					"address": "10.10.10.2",
 					"port": "4421"
-				},
-				{
-					"type": "tcp",
-					"address": "192.168.0.102",
-					"port": "4431"
 				}
 			],
 			"clients_channels":
 			[
 				{
 					"type": "tcp",
-					"address": "192.168.0.102",
+					"address": "10.10.10.2",
 					"port": "4420"
-				},
-				{
-					"type": "tcp",
-					"address": "192.168.0.102",
-					"port": "4430"
 				}
 			]
 		},
@@ -73,26 +64,16 @@
 			[
 				{
 					"type": "tcp",
-					"address": "192.168.0.103",
+					"address": "10.10.10.3",
 					"port": "4421"
-				},
-				{
-					"type": "tcp",
-					"address": "192.168.0.103",
-					"port": "4431"
 				}
 			],
 			"clients_channels":
 			[
 				{
 					"type": "tcp",
-					"address": "192.168.0.103",
+					"address": "10.10.10.3",
 					"port": "4420"
-				},
-				{
-					"type": "tcp",
-					"address": "192.168.0.103",
-					"port": "4430"
 				}
 			]
 		},
@@ -103,26 +84,16 @@
 			[
 				{
 					"type": "tcp",
-					"address": "192.168.0.131",
+					"address": "10.10.10.4",
 					"port": "4421"
-				},
-				{
-					"type": "tcp",
-					"address": "192.168.0.131",
-					"port": "4431"
 				}
 			],
 			"clients_channels":
 			[
 				{
 					"type": "tcp",
-					"address": "192.168.0.131",
+					"address": "10.10.10.4",
 					"port": "4420"
-				},
-				{
-					"type": "tcp",
-					"address": "192.168.0.131",
-					"port": "4430"
 				}
 			]
 		}
@@ -134,7 +105,7 @@
 		"username": "root",
 		"passwd": "1234",
 		"server": "192.168.0.131",
-		"share": "witness_share",
+		"share": "smb_witness",
 		"path": ""
 	}
 }
