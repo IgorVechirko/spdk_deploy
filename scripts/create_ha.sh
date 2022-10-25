@@ -9,10 +9,14 @@ self_path=$(pwd)
 
 cd $(get_node $1 "spdk_path")
 
-if [ '$(get_node $1 "ram_bdev.name")' != "null" ]
+ram_name=$(get_node $1 "ram_bdev.name")
+nvme_name=$(get_node $1 "nvme_bdev.name")
+
+
+if [ "$ram_name" != "null" ]
 then
 	node_bdev=$(get_node $1 "ram_bdev.name")
-elif [ '$(get_node $1 "nvme_bdev.name")' != "null" ]
+elif [ "$nvme_name" != "null" ]
 then
 	node_bdev=$(get_node $1 "nvme_bdev.name")
 fi

@@ -12,10 +12,13 @@ cd $(get_node $1 "spdk_path")
 sudo ./scripts/rpc.py nvmf_create_transport -t TCP
 sudo ./scripts/rpc.py nvmf_create_transport -t RDMA
 
-if [ '$(get_node $1 "ram_bdev.name")' != "null" ]
+ram_name=$(get_node $1 "ram_bdev.name")
+nvme_name=$(get_node $1 "nvme_bdev.name")
+
+if [ "$ram_name" != "null" ]
 then
 	sudo ./scripts/rpc.py bdev_malloc_create -b $(get_node $1 "ram_bdev.name") $(get_node $1 "ram_bdev.size") $(get_node $1 "ram_bdev.block_size")
-elif [ '$(get_node $1 "nvme_bdev.name")' != "null" ]
+elif [ "$nvme_name" != "null" ]
 then
 	sudo ./scripts/rpc.py bdev_nvme_attach_controller -b $(get_node $1 "nvme_bdev.prefix") -t PCIe -a $(get_node $1 "nvme_bdev.controller")
 fi
