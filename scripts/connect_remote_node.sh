@@ -21,10 +21,12 @@ for ch_idx in `seq 0 $(($channels_count-1))`
 do
 	channel=$(echo $channels|jq ".[$ch_idx]" -r)
 
-	trt_type=$(echo $channel|jq '.type' -r)
+	ch_type=$(echo $channel|jq ".type" -r)
+
+	trt_type=$(echo $channel|jq '.transport' -r)
 	trt_type=$(echo $trt_type | tr '[:lower:]' '[:upper:]')
 
-	rpc_args="$rpc_args --remote_node_channel \"$trt_type $(echo $channel|jq '.address' -r) $(echo $channel|jq '.port' -r)\""
+	rpc_args="$rpc_args --remote_node_channel \"$ch_type $trt_type $(echo $channel|jq '.address' -r) $(echo $channel|jq '.port' -r)\""
 done
 
 sudo echo ${rpc_args}|xargs python3 -u ./scripts/rpc.py

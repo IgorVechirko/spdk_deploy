@@ -43,7 +43,8 @@
 			"partners_channels":
 			[
 				{
-					"type": "tcp",
+					"transport": "tcp",
+					"type": "SYNC",
 					"address": "10.10.10.2",
 					"port": "4421"
 				}
@@ -51,7 +52,7 @@
 			"clients_channels":
 			[
 				{
-					"type": "tcp",
+					"transport": "tcp",
 					"address": "10.10.10.2",
 					"port": "4420"
 				}
@@ -63,7 +64,8 @@
 			"partners_channels":
 			[
 				{
-					"type": "tcp",
+					"transport": "tcp",
+					"type": "SYNC",
 					"address": "10.10.10.3",
 					"port": "4421"
 				}
@@ -71,7 +73,7 @@
 			"clients_channels":
 			[
 				{
-					"type": "tcp",
+					"transport": "tcp",
 					"address": "10.10.10.3",
 					"port": "4420"
 				}

@@ -32,7 +32,7 @@ do
 	channel=$(echo $partners_channels|jq ".[$ch_idx]")
 
 	rpc_args="nvmf_subsystem_add_listener $(get_var 'ha.nqn')"
-	rpc_args="$rpc_args -t $(echo $channel|jq '.type' -r)"
+	rpc_args="$rpc_args -t $(echo $channel|jq '.transport' -r)"
 	rpc_args="$rpc_args -a $(echo $channel|jq '.address' -r)"
 	rpc_args="$rpc_args -s $(echo $channel|jq '.port' -r)"
 
@@ -46,7 +46,7 @@ do
 	channel=$(echo $clients_channels|jq ".[$ch_idx]")
 
 	rpc_args="nvmf_subsystem_add_listener $(get_var 'ha.nqn')"
-	rpc_args="$rpc_args -t $(echo $channel|jq '.type' -r)"
+	rpc_args="$rpc_args -t $(echo $channel|jq '.transport' -r)"
 	rpc_args="$rpc_args -a $(echo $channel|jq '.address' -r)"
 	rpc_args="$rpc_args -s $(echo $channel|jq '.port' -r)"
 
