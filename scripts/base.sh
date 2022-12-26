@@ -146,6 +146,8 @@ exe_on_host(){
 		done
 	done
 
+	echo "Exec: $cmd"
+
 	if [ $exe_localy -eq '1' ]
 	then
 		$cmd
@@ -154,8 +156,8 @@ exe_on_host(){
 	fi
 }
 
-exe_on_host "10.10.10.2" "root" "1234" "ls"
-echo "\n"
-exe_on_host "10.10.10.3" "root" "1234" "ls"
+#exe_on_host "10.10.10.2" "root" "1234" "ls -lash"
+#echo "\n"
+#exe_on_host "10.10.10.3" "root" "1234" "ls"
 
 #exit 1
