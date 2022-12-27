@@ -150,9 +150,9 @@ exe_on_host(){
 
 	if [ $exe_localy -eq '1' ]
 	then
-		$cmd
+		eval $cmd
 	else
-		sshpass -p $pass ssh "$user@$host" $cmd
+		sshpass -p $pass ssh "$user@$host" "$cmd"
 	fi
 }
 

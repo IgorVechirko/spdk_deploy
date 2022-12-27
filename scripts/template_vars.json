@@ -128,8 +128,8 @@
 		"HUGEMEM": 2048,
 		"spdk_path": "/root/wc/sw_spdk",
 		"bin_path": "/root/wc/sw_spdk/build/bin",
-		"exe_name": "nvmf_cpp_tgt",
-		"header_path": "/root/wc/ha/ha1_header.json",
+		"bin_name": "nvmf_cpp_tgt",
+		"header_path": "/root/wc/ha/ha2_header.json",
 		"spdk_conf": "/root/wd/ha/spdk_conf.json",
 		"log_file": "/root/wc/ha/tgt_output.log",
 		"bin_ftp_path": "ftp://10.10.10.2/wc/sw_spdk/build/bin/",
@@ -155,29 +155,6 @@
 		{
 			"id": 1,
 			"ns_id": 1,
-			"ssh_ftp_addr": "10.10.10.2",
-			"ssh_ftp_user": "root",
-			"ssh_ftp_pass": "1234",
-			"partners_channels":
-			[
-				{
-					"type": "tcp",
-					"address": "10.10.10.2",
-					"port": "4421"
-				}
-			],
-			"clients_channels":
-			[
-				{
-					"type": "tcp",
-					"address": "10.10.10.2",
-					"port": "4420"
-				}
-			]
-		},
-		{
-			"id": 2,
-			"ns_id": 1,
 			"ssh_ftp_addr": "10.10.10.3",
 			"ssh_ftp_user": "root",
 			"ssh_ftp_pass": "1234",
@@ -194,6 +171,29 @@
 				{
 					"type": "tcp",
 					"address": "10.10.10.3",
+					"port": "4420"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"ns_id": 1,
+			"ssh_ftp_addr": "10.10.10.4",
+			"ssh_ftp_user": "root",
+			"ssh_ftp_pass": "1234",
+			"partners_channels":
+			[
+				{
+					"type": "tcp",
+					"address": "10.10.10.4",
+					"port": "4421"
+				}
+			],
+			"clients_channels":
+			[
+				{
+					"type": "tcp",
+					"address": "10.10.10.4",
 					"port": "4420"
 				}
 			]

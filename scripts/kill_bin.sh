@@ -28,14 +28,14 @@ fi
 dev=$1
 node=$2
 
-echo "For $dev device setting raft to node $node..."
+echo "Killing $dev device binary on $node node..."
 
-spdk_path=$(get_dev_node_field $dev $node "spdk_path")
+bin_name=$(get_dev_node_field $dev $node "bin_name")
 
-set_raft_cmd="$spdk_path/scripts/rpc.py bdev_ha_set_raft_leader_election $dev"
+kill_cmd="sudo ps -ax | grep $bin_name | grep -v grep | awk '{print \$1}' | sudo xargs kill -9"
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")
 pass=$(get_dev_node_field $dev $node "ssh_ftp_pass")
 
-exe_on_host $host_addr $user $pass "$set_raft_cmd"
+exe_on_host $host_addr $user $pass "$kill_cmd"

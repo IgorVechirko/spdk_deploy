@@ -39,24 +39,19 @@ log_file=$(get_dev_node_field $dev $node "log_file")
 cleanup_cmd="$spdk_path/scripts/setup.sh cleanup"
 setup_cmd="sudo HUGEMEM=$huge_size $spdk_path/scripts/setup.sh"
 run_bin_cmd="sudo $bin_path/$bin_name > $log_file 2>&1 &"
+create_tcp_cmd="$spdk_path/scripts/rpc.py nvmf_create_transport -t TCP"
+create_dma_cmd="$spdk_path/scripts/rpc.py nvmf_create_transport -t RDMA"
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")
 pass=$(get_dev_node_field $dev $node "ssh_ftp_pass")
 
+#sudo ./scripts/rpc.py nvmf_create_transport -t TCP
+#sudo ./scripts/rpc.py nvmf_create_transport -t RDMA
+
 exe_on_host $host_addr $user $pass "$cleanup_cmd"
 exe_on_host $host_addr $user $pass "$setup_cmd"
 exe_on_host $host_addr $user $pass "$run_bin_cmd"
-
-#self_path=$(pwd)
-
-#cd $(get_node $1 "spdk_path")
-
-#sudo ./scripts/setup.sh cleanup
-#sudo HUGEMEM=$(get_node $1 "HUGEMEM") ./scripts/setup.sh
-
-#cd $(get_node $1 "bin_path")
-
-#sudo ./$(get_node $1 "exe_name") > $(get_node $1 "log_file") 2>&1 &
-
-#cd $self_path
+sleep 3
+exe_on_host $host_addr $user $pass "$create_tcp_cmd"
+exe_on_host $host_addr $user $pass "$create_dma_cmd"
