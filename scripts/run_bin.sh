@@ -21,7 +21,7 @@ fi
 
 if [ $(check_is_dev_node_exist $1 $2) -eq "0" ]
 then
-	echo "\nFor device $1 node $1 doesn't exist"
+	echo "\nFor device $1 node $2 doesn't exist"
 	exit 1
 fi
 
