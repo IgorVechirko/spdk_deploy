@@ -1,113 +1,239 @@
-{
-	"ha":
+[
 	{
-		"name" : "Ha1",
-		"nqn" : "nqn.2016-06.sw.ha:ha1",
+		"name" : "ram512",
+		"nqn" : "nqn.2016-06.sw.ha:ram512",
 		"id" : 1,
-		"size" : "1GiB",
-		"uuid": "6d28acdf-7d3e-49b2-ac07-f5678160d7c3"
-	},
-
-	"defaults":
-	{
-		"HUGEMEM": 2048,
-		"spdk_path": "/root/wc/sw_spdk",
-		"bin_path": "/root/wc/sw_spdk/build/bin",
-		"exe_name": "nvmf_cpp_tgt",
-		"header_path": "/root/wc/ha/ha1_header.json",
-		"spdk_conf": "/root/wd/ha/spdk_conf.json",
-		"log_file": "/root/wc/ha/tgt_output.log",
-		"bin_ftp_path": "ftp://10.10.10.2/wc/sw_spdk/build/bin/",
-		"ftp_user": "root",
-		"ftp_passwd": "1234",
-		"ftp_dest_path": "/root/wc/sw_spdk/build/bin/",
-
-		"ram_bdev":{
-			"name": "ram_bdev",
-			"size": 1024,
-			"block_size": 4096
-		},
-		"nvme_bdev":
+		"size" : "512MB",
+		"uuid": "6d28acdf-7d3e-49b2-ac07-f5678160d7c3",
+	
+		"defaults":
 		{
-			"prefix": "Nvme0",
-			"name": "Nvme0n1",
-			"controller": "0000:00:0e.0"
+			"HUGEMEM": 2048,
+			"spdk_path": "/root/wc/sw_spdk",
+			"bin_path": "/root/wc/sw_spdk/build/bin",
+			"bin_name": "nvmf_cpp_tgt",
+			"header_path": "/root/wc/ha/ram512_header.json",
+			"spdk_conf": "/root/wd/ha/spdk_conf.json",
+			"log_file": "/root/wc/ha/tgt_output.log",
+			"bin_ftp_path": "ftp://10.10.10.2/wc/sw_spdk/build/bin/",
+			"ftp_user": "root",
+			"ftp_passwd": "1234",
+			"ftp_dest_path": "/root/wc/sw_spdk/build/bin/",
+	
+			"ram_bdev":{
+				"name": "ram512_local",
+				"size": 512,
+				"block_size": 512
+			},
+			"nvme_bdev":
+			{
+				"prefix": "Nvme0",
+				"name": "Nvme0n1",
+				"controller": "0000:00:0e.0"
+			}
+		},
+	
+		"nodes":
+		[
+			{
+				"id": 1,
+				"ns_id": 1,
+				"ssh_ftp_addr": "10.10.10.2",
+				"ssh_ftp_user": "root",
+				"ssh_ftp_pass": "1234",
+				"partners_channels":
+				[
+					{
+						"type": "SYNC",
+						"transport": "tcp",
+						"address": "10.10.10.2",
+						"port": "4421"
+					}
+				],
+				"clients_channels":
+				[
+					{
+						"transport": "tcp",
+						"address": "10.10.10.2",
+						"port": "4420"
+					}
+				]
+			},
+			{
+				"id": 2,
+				"ns_id": 1,
+				"ssh_ftp_addr": "10.10.10.3",
+				"ssh_ftp_user": "root",
+				"ssh_ftp_pass": "1234",
+				"partners_channels":
+				[
+					{
+						"type": "SYNC",
+						"transport": "tcp",
+						"address": "10.10.10.3",
+						"port": "4421"
+					}
+				],
+				"clients_channels":
+				[
+					{
+						"transport": "tcp",
+						"address": "10.10.10.3",
+						"port": "4420"
+					}
+				]
+			},
+			{
+				"id": 3,
+				"ns_id": 1,
+				"ssh_ftp_addr": "10.10.10.4",
+				"ssh_ftp_user": "root",
+				"ssh_ftp_pass": "1234",
+				"partners_channels":
+				[
+					{
+						"type": "tcp",
+						"address": "10.10.10.4",
+						"port": "4421"
+					}
+				],
+				"clients_channels":
+				[
+					{
+						"type": "tcp",
+						"address": "10.10.10.4",
+						"port": "4420"
+					}
+				]
+			}
+		],
+	
+		"smb_witness":
+		{
+			"domain": "",
+			"username": "root",
+			"passwd": "1234",
+			"server": "192.168.0.131",
+			"share": "smb_witness",
+			"path": ""
 		}
 	},
-
-	"nodes":
-	[
-		{
-			"id": 1,
-			"ns_id": 1,
-			"partners_channels":
-			[
-				{
-					"type": "SYNC",
-					"transport": "tcp",
-					"address": "10.10.10.2",
-					"port": "4421"
-				}
-			],
-			"clients_channels":
-			[
-				{
-					"transport": "tcp",
-					"address": "10.10.10.2",
-					"port": "4420"
-				}
-			]
-		},
-		{
-			"id": 2,
-			"ns_id": 1,
-			"partners_channels":
-			[
-				{
-					"type": "SYNC",
-					"transport": "tcp",
-					"address": "10.10.10.3",
-					"port": "4421"
-				}
-			],
-			"clients_channels":
-			[
-				{
-					"transport": "tcp",
-					"address": "10.10.10.3",
-					"port": "4420"
-				}
-			]
-		},
-		{
-			"id": 3,
-			"ns_id": 1,
-			"partners_channels":
-			[
-				{
-					"type": "tcp",
-					"address": "10.10.10.4",
-					"port": "4421"
-				}
-			],
-			"clients_channels":
-			[
-				{
-					"type": "tcp",
-					"address": "10.10.10.4",
-					"port": "4420"
-				}
-			]
-		}
-	],
-
-	"smb_witness":
 	{
-		"domain": "",
-		"username": "root",
-		"passwd": "1234",
-		"server": "192.168.0.131",
-		"share": "smb_witness",
-		"path": ""
+		"name" : "ram512_2",
+		"nqn" : "nqn.2016-06.sw.ha:ram512_2",
+		"id" : 2,
+		"size" : "512MB",
+		"uuid": "6d28acdf-7d3e-49b2-ac07-f5678160d7c4",
+
+		"defaults":
+		{
+			"HUGEMEM": 2048,
+			"spdk_path": "/root/wc/sw_spdk",
+			"bin_path": "/root/wc/sw_spdk/build/bin",
+			"bin_name": "nvmf_cpp_tgt",
+			"header_path": "/root/wc/ha/ram512_header.json",
+			"spdk_conf": "/root/wd/ha/spdk_conf.json",
+			"log_file": "/root/wc/ha/tgt_output.log",
+			"bin_ftp_path": "ftp://10.10.10.2/wc/sw_spdk/build/bin/",
+			"ftp_user": "root",
+			"ftp_passwd": "1234",
+			"ftp_dest_path": "/root/wc/sw_spdk/build/bin/",
+
+			"ram_bdev":{
+				"name": "ram512_2_local",
+				"size": 512,
+				"block_size": 512
+			},
+			"nvme_bdev":
+			{
+				"prefix": "Nvme0",
+				"name": "Nvme0n1",
+				"controller": "0000:00:0e.0"
+			}
+		},
+
+		"nodes":
+		[
+			{
+				"id": 1,
+				"ns_id": 1,
+				"ssh_ftp_addr": "10.10.10.2",
+				"ssh_ftp_user": "root",
+				"ssh_ftp_pass": "1234",
+				"partners_channels":
+				[
+					{
+						"type": "tcp",
+						"address": "10.10.10.2",
+						"port": "4421"
+					}
+				],
+				"clients_channels":
+				[
+					{
+						"type": "tcp",
+						"address": "10.10.10.2",
+						"port": "4420"
+					}
+				]
+			},
+			{
+				"id": 2,
+				"ns_id": 1,
+				"ssh_ftp_addr": "10.10.10.3",
+				"ssh_ftp_user": "root",
+				"ssh_ftp_pass": "1234",
+				"partners_channels":
+				[
+					{
+						"type": "tcp",
+						"address": "10.10.10.3",
+						"port": "4421"
+					}
+				],
+				"clients_channels":
+				[
+					{
+						"type": "tcp",
+						"address": "10.10.10.3",
+						"port": "4420"
+					}
+				]
+			},
+			{
+				"id": 3,
+				"ns_id": 1,
+				"ssh_ftp_addr": "10.10.10.4",
+				"ssh_ftp_user": "root",
+				"ssh_ftp_pass": "1234",
+				"partners_channels":
+				[
+					{
+						"type": "tcp",
+						"address": "10.10.10.4",
+						"port": "4421"
+					}
+				],
+				"clients_channels":
+				[
+					{
+						"type": "tcp",
+						"address": "10.10.10.4",
+						"port": "4420"
+					}
+				]
+			}
+		],
+
+		"smb_witness":
+		{
+			"domain": "",
+			"username": "root",
+			"passwd": "1234",
+			"server": "192.168.0.131",
+			"share": "smb_witness",
+			"path": ""
+		}
 	}
-}
+]
+	
