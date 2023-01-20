@@ -28,7 +28,7 @@ fi
 dev=$1
 node=$2
 
-echo "Appending $dev device $node node..."
+echo "Creating $dev device $node node..."
 
 spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
@@ -48,11 +48,30 @@ create_ha_header_cmd="$create_ha_header_cmd --device_id $(get_dev_field $dev "id
 create_ha_header_cmd="$create_ha_header_cmd --device_nqn $(get_dev_field $dev "nqn")"
 create_ha_header_cmd="$create_ha_header_cmd --device_size $(get_dev_field $dev "size")"
 create_ha_header_cmd="$create_ha_header_cmd --uuid $(get_dev_field $dev "uuid")"
-create_ha_header_cmd="$create_ha_header_cmd --local_node_id $(get_dev_node_field $dev $node "id")"
+create_ha_header_cmd="$create_ha_header_cmd --ha_creation_action append_to_exist"
+create_ha_header_cmd="$create_ha_header_cmd --local_node_id $node"
 create_ha_header_cmd="$create_ha_header_cmd --local_node_type SYNC_REPLICA"
 create_ha_header_cmd="$create_ha_header_cmd --local_node_nsid $(get_dev_node_field $dev $node "ns_id")"
 create_ha_header_cmd="$create_ha_header_cmd --local_node_data_replica $node_bdev"
-create_ha_header_cmd="$create_ha_header_cmd --ha_creation_action append_to_exist"
+
+channels=$(get_dev_node_field $dev $node "partners_channels")
+channels_count=$(echo $channels|jq 'length')
+
+for ch_idx in `seq 0 $(($channels_count-1))`
+do
+	channel=$(echo $channels|jq ".[$ch_idx]" -r)
+
+	trt_type=$(echo $channel|jq '.type' -r)
+
+	trt_transport=$(echo $channel|jq '.transport' -r)
+	trt_transport=$(echo $trt_transport| tr '[:lower:]' '[:upper:]')
+
+	address=$(echo $channel|jq '.address' -r)
+	port=$(echo $channel|jq '.port' -r)
+
+	create_ha_header_cmd="$create_ha_header_cmd --local_node_channel \"$trt_type $trt_transport $address $port\""
+done
+
 
 create_ha_cmd="sudo $spdk_path/scripts/rpc.py bdev_ha_create $dev $(get_dev_node_field $dev $node "header_path")"
 

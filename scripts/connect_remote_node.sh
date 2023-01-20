@@ -56,7 +56,7 @@ do
 	trt_transport=$(echo $channel|jq '.transport' -r)
 	trt_transport=$(echo $trt_type | tr '[:lower:]' '[:upper:]')
 
-	rpc_args="$rpc_args --remote_node_channel \"$trt_type $trt_transport $(echo $channel|jq '.address' -r) $(echo $channel|jq '.port' -r)\""
+	rpc_args="$rpc_args --partners_channel \"$trt_type $trt_transport $(echo $channel|jq '.address' -r) $(echo $channel|jq '.port' -r)\""
 done
 
 add_node_cmd="sudo $spdk_path/scripts/rpc.py $rpc_args"
