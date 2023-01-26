@@ -54,7 +54,7 @@ do
 	trt_type=$(echo $channel|jq '.type' -r)
 
 	trt_transport=$(echo $channel|jq '.transport' -r)
-	trt_transport=$(echo $trt_type | tr '[:lower:]' '[:upper:]')
+	trt_transport=$(echo $trt_transport | tr '[:lower:]' '[:upper:]')
 
 	rpc_args="$rpc_args --partners_channel \"$trt_type $trt_transport $(echo $channel|jq '.address' -r) $(echo $channel|jq '.port' -r)\""
 done
