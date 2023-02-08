@@ -14,4 +14,6 @@ sudo ./scripts/rpc.py bdev_ha_create Ha0 /root/wc/ha/ha_header.json
 
 sudo ./scripts/rpc.py bdev_ha_add_remote_node Ha0 --remote_node_id 1 --remote_node_type SYNC_REPLICA --partners_channel "SYNC TCP 10.10.10.2 7544" --partners_channel "HEARTBEAT TCP 10.10.10.3 7403"
 
+sudo ./scripts/rpc.py bdev_ha_add_smb_witness Ha0 --smb_domain "" --smb_username "root" --smb_password "1234" --smb_server "192.168.0.131" --smb_share "smb_witness" --smb_path ""
+
 sudo ./scripts/rpc.py bdev_ha_set_heartbeat Ha0
