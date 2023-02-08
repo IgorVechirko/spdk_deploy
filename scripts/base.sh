@@ -1,6 +1,6 @@
 #!/bin/bash
 
-vars=$(sudo cat ./template_vars.json)
+vars=$(sudo cat ./vars.json)
 
 get_dev_info() {
 

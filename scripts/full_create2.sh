@@ -1,22 +1,17 @@
 #!/bin/bash
 
-#sh kill_tgt.sh 1
-#sh run_tgt.sh 1
-#sleep 2
-#sh setup_spdk.sh 1
-#sh create_ha.sh 1
-#sh connect_remote_node.sh 2
-#sh add_witness.sh
-#sh raft_set.sh 1
-#sh hb_set.sh 1
-#sh hb_set.sh 1
+sh kill_bin.sh ram512 2
+sh run_bin.sh ram512 2
+#sleep 3
+#../../sw_spdk/scripts/rpc.py log_set_print_level DEBUG
+sh setup_bin.sh ram512 2
+sh setup_ha.sh ram512 2
+sh load_ha.sh ram512 2
+#sh load_ha.sh ram512 2
+#sh create_ha.sh ram512 2
+#sh connect_remote_node.sh ram512 2 1
+#sh connect_remote_node.sh ram512 1 3
+#sh raft_set.sh ram512 2
+#sh heartbeat_set.sh ram512 2
 
 #tail -f ../../ha/tgt_output.log
-
-sh kill_bin.sh Ha2 2
-sh run_bin.sh Ha2 2
-sh setup_ha.sh Ha2 2
-sh create_ha.sh Ha2 2
-#sh append_ha.sh Ha2 2
-sh connect_remote_node.sh Ha2 2 1
-sh raft_set.sh Ha2 2
