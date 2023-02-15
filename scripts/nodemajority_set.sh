@@ -32,7 +32,7 @@ echo "For $dev device setting raft to node $node..."
 
 spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
-set_raft_cmd="$spdk_path/scripts/rpc.py bdev_ha_set_raft_leader_election $dev"
+set_raft_cmd="$spdk_path/scripts/rpc.py bdev_ha_set_nodemajority $dev"
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")

@@ -69,7 +69,7 @@ do
 	address=$(echo $channel|jq '.address' -r)
 	port=$(echo $channel|jq '.port' -r)
 
-	create_ha_header_cmd="$create_ha_header_cmd --local_node_channel \"$trt_type $trt_transport $address $port\""
+	create_ha_header_cmd="$create_ha_header_cmd --node_partners_channel \"$trt_type $trt_transport $address $port\""
 done
 
 

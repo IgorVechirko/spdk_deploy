@@ -4,37 +4,45 @@
 
 help()
 {
-	echo "\nPlease call:\n\t $0 <node_id>"
+	echo "\nPlease call:\n\t $0 <dev_name> <node_id>"
 }
 
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$1" ]
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$1" ] || [ -z "$2" ]
 then
 	help
 	exit 1
 fi
 
-if [ $(check_is_node_exist $1) -eq "0" ]
+if [ -z "$get_dev_info $1" ]
 then
-	echo "\nNode $1 doesn't exist"
+	echo "\nDevice $1 doesn't exist"
 	exit 1
 fi
 
-node_id=$1
+if [ $(check_is_dev_node_exist $1 $2) -eq "0" ]
+then
+	echo "\nFor device $1 node $1 doesn't exist"
+	exit 1
+fi
 
-echo "\nAdding smb witness..."
+dev=$1
+node=$2
 
-self_path=$(pwd)
+echo "Add smbWitness to $dev device on $node node..."
 
-cd $(get_node $node_id "spdk_path")
 
-rpc_args="bdev_ha_add_raft_smb_witness $(get_var 'ha.name')"
-rpc_args="$rpc_args --witness-domain \"$(get_var 'smb_witness.domain')\""
-rpc_args="$rpc_args --witness-username \"$(get_var 'smb_witness.username')\""
-rpc_args="$rpc_args --witness-password \"$(get_var 'smb_witness.passwd')\""
-rpc_args="$rpc_args --witness-server \"$(get_var 'smb_witness.server')\""
-rpc_args="$rpc_args --witness-share \"$(get_var 'smb_witness.share')\""
-rpc_args="$rpc_args --witness-path \"$(get_var 'smb_witness.path')\""
+spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
-sudo echo ${rpc_args}|xargs python3 -u ./scripts/rpc.py
+add_smb_cmd="sudo $spdk_path/scripts/rpc.py bdev_ha_add_smb_witness $dev"
+add_smb_cmd="$add_smb_cmd --smb_domain \"$(get_dev_field $dev 'smb_witness.domain')\""
+add_smb_cmd="$add_smb_cmd --smb_username \"$(get_dev_field $dev 'smb_witness.username')\""
+add_smb_cmd="$add_smb_cmd --smb_password \"$(get_dev_field $dev 'smb_witness.passwd')\""
+add_smb_cmd="$add_smb_cmd --smb_server \"$(get_dev_field $dev 'smb_witness.server')\""
+add_smb_cmd="$add_smb_cmd --smb_share \"$(get_dev_field $dev 'smb_witness.share')\""
+add_smb_cmd="$add_smb_cmd --smb_path \"$(get_dev_field $dev 'smb_witness.path')\""
 
-cd $self_path
+host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
+user=$(get_dev_node_field $dev $node "ssh_ftp_user")
+pass=$(get_dev_node_field $dev $node "ssh_ftp_pass")
+
+exe_on_host $host_addr $user $pass "$add_smb_cmd"
