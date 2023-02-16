@@ -39,10 +39,10 @@ echo "For $dev device connect $3 node to $2 node..."
 
 spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
-rpc_args="bdev_ha_add_remote_node $dev"
-rpc_args="$rpc_args --remote_node_id $remote_node"
-rpc_args="$rpc_args --remote_node_type SYNC_REPLICA"
-rpc_args="$rpc_args --remote_node_ns $(get_dev_node_field $dev $remote_node 'ns_id')"
+rpc_args="bdev_ha_append_node $dev"
+rpc_args="$rpc_args --node_id $remote_node"
+#rpc_args="$rpc_args --node_type SYNC_REPLICA"
+rpc_args="$rpc_args --node_ns $(get_dev_node_field $dev $remote_node 'ns_id')"
 
 channels=$(get_dev_node_field $dev $remote_node "partners_channels")
 channels_count=$(echo $channels|jq 'length')

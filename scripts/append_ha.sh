@@ -46,11 +46,11 @@ fi
 create_ha_header_cmd="sudo $spdk_path/scripts/rpc.py bdev_ha_create_header $(get_dev_node_field $dev $node "header_path")"
 create_ha_header_cmd="$create_ha_header_cmd --device_id $(get_dev_field $dev "id")"
 create_ha_header_cmd="$create_ha_header_cmd --device_nqn $(get_dev_field $dev "nqn")"
-create_ha_header_cmd="$create_ha_header_cmd --device_size $(get_dev_field $dev "size")"
+#create_ha_header_cmd="$create_ha_header_cmd --device_size $(get_dev_field $dev "size")"
 create_ha_header_cmd="$create_ha_header_cmd --uuid $(get_dev_field $dev "uuid")"
 create_ha_header_cmd="$create_ha_header_cmd --ha_creation_action append_to_exist"
 create_ha_header_cmd="$create_ha_header_cmd --local_node_id $node"
-create_ha_header_cmd="$create_ha_header_cmd --local_node_type SYNC_REPLICA"
+#create_ha_header_cmd="$create_ha_header_cmd --local_node_type SYNC_REPLICA"
 create_ha_header_cmd="$create_ha_header_cmd --local_node_nsid $(get_dev_node_field $dev $node "ns_id")"
 create_ha_header_cmd="$create_ha_header_cmd --local_node_data_replica $node_bdev"
 

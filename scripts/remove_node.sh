@@ -4,10 +4,10 @@
 
 help()
 {
-	echo "\nPlease call:\n\t $0 <dev_name> <node_id>"
+	echo "\nPlease call:\n\t $0 <dev_name> <target_node_id> <node_to_connect>"
 }
 
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$1" ] || [ -z "$2" ]
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]
 then
 	help
 	exit 1
@@ -25,19 +25,25 @@ then
 	exit 1
 fi
 
+if [ $(check_is_dev_node_exist $1 $3) -eq "0" ]
+then
+	echo "\nFor device $1 node $1 doesn't exist"
+	exit 1
+fi
+
 dev=$1
 node=$2
+remote_node=$3
 
-echo "Del smbWitness from $dev device on $node node..."
-
+echo "For $dev device remove $3 node on $2 node..."
 
 spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
-del_smb_cmd="sudo $spdk_path/scripts/rpc.py bdev_ha_del_smb_witness $dev"
-
+rpc_args="bdev_ha_remove_node $dev $3"
+del_node_cmd="sudo $spdk_path/scripts/rpc.py $rpc_args"
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")
 pass=$(get_dev_node_field $dev $node "ssh_ftp_pass")
 
-exe_on_host $host_addr $user $pass "$del_smb_cmd"
+exe_on_host $host_addr $user $pass "$del_node_cmd"

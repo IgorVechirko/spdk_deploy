@@ -34,12 +34,12 @@ echo "Add smbWitness to $dev device on $node node..."
 spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
 add_smb_cmd="sudo $spdk_path/scripts/rpc.py bdev_ha_add_smb_witness $dev"
-add_smb_cmd="$add_smb_cmd --smb_domain \"$(get_dev_field $dev 'smb_witness.domain')\""
+#add_smb_cmd="$add_smb_cmd --smb_domain \"$(get_dev_field $dev 'smb_witness.domain')\""
 add_smb_cmd="$add_smb_cmd --smb_username \"$(get_dev_field $dev 'smb_witness.username')\""
 add_smb_cmd="$add_smb_cmd --smb_password \"$(get_dev_field $dev 'smb_witness.passwd')\""
 add_smb_cmd="$add_smb_cmd --smb_server \"$(get_dev_field $dev 'smb_witness.server')\""
 add_smb_cmd="$add_smb_cmd --smb_share \"$(get_dev_field $dev 'smb_witness.share')\""
-add_smb_cmd="$add_smb_cmd --smb_path \"$(get_dev_field $dev 'smb_witness.path')\""
+#add_smb_cmd="$add_smb_cmd --smb_path \"$(get_dev_field $dev 'smb_witness.path')\""
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")
