@@ -17,3 +17,6 @@ sudo ./scripts/rpc.py bdev_ha_append_node Ha0 --node_id 1 --node-nsid 1 --partne
 
 sudo ./scripts/rpc.py bdev_ha_set_nodemajority Ha0
 #sudo ./scripts/rpc.py bdev_ha_set_heartbeat Ha0
+
+#listener for clients connections
+sudo ./scripts/rpc.py nvmf_subsystem_add_listener -t tcp -a "40.40.40.102" -s 4420
