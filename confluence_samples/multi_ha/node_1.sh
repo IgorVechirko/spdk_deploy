@@ -30,7 +30,7 @@ sudo ./scripts/rpc.py bdev_malloc_create -b ha2_ram_bdev 1024 512
 
 sudo ./scripts/rpc.py nvmf_create_subsystem nqn.2016-06.sw.ha:ha2 -a -s SPDK00000000000001 -d SPDK_Controller1 --ana-reporting
 
-sudo ./scripts/rpc.py bdev_ha_create_header /root/wc/ha/ha2_header.json --device_id 1 --device_nqn nqn.2016-06.sw.ha:ha2 --device_size 1GiB --uuid 6d28acdf-7d3e-49b2-ac07-f5678160d7c3 --ha_creation_action create_new --local_node_id 1 --local_node_nsid 1 --local_node_data_replica ha2_ram_bdev --node_partners_channel "SYNC TCP 30.30.30.101 8523" --node_partners_channel "HEARTBEAT TCP 20.20.20.101 6547"
+sudo ./scripts/rpc.py bdev_ha_create_header /root/wc/ha/ha2_header.json --device_id 2 --device_nqn nqn.2016-06.sw.ha:ha2 --device_size 1GiB --uuid 6d28acdf-7d3e-49b2-ac07-f5678160d7c4 --ha_creation_action create_new --local_node_id 1 --local_node_nsid 1 --local_node_data_replica ha2_ram_bdev --node_partners_channel "SYNC TCP 30.30.30.101 8523" --node_partners_channel "HEARTBEAT TCP 20.20.20.101 6547"
 sudo ./scripts/rpc.py bdev_ha_create Ha2 /root/wc/ha/ha2_header.json
 
 sudo ./scripts/rpc.py bdev_ha_append_node Ha2 --node_id 2 --node-nsid 1 --partners_channel "SYNC TCP 30.30.30.102 9735" --partners_channel "HEARTBEAT TCP 20.20.20.102 1374"
