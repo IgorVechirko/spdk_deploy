@@ -19,4 +19,4 @@ sudo ./scripts/rpc.py bdev_ha_set_nodemajority Ha0
 #sudo ./scripts/rpc.py bdev_ha_set_heartbeat Ha0
 
 #listener for clients connections
-sudo ./scripts/rpc.py nvmf_subsystem_add_listener -t tcp -a "40.40.40.102" -s 4420
+sudo ./scripts/rpc.py nvmf_subsystem_add_listener nqn.2016-06.sw.ha:ha0 -t tcp -a "40.40.40.102" -s 4420
