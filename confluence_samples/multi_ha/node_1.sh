@@ -19,6 +19,9 @@ sudo ./scripts/rpc.py bdev_ha_append_node Ha1 --node_id 2 --node-nsid 1 --partne
 
 sudo ./scripts/rpc.py bdev_ha_set_nodemajority Ha1
 
+#listener for clients connections
+sudo ./scripts/rpc.py nvmf_subsystem_add_listener nqn.2016-06.sw.ha:ha1 -t tcp -a "40.40.40.101" -s 4420
+
 
 
 #Ha2
@@ -33,3 +36,6 @@ sudo ./scripts/rpc.py bdev_ha_create Ha0 /root/wc/ha/ha2_header.json
 sudo ./scripts/rpc.py bdev_ha_append_node Ha2 --node_id 2 --node-nsid 1 --partners_channel "SYNC TCP 30.30.30.102 9735" --partners_channel "HEARTBEAT TCP 20.20.20.102 1374"
 
 sudo ./scripts/rpc.py bdev_ha_set_heartbeat Ha2
+
+#listener for clients connections
+sudo ./scripts/rpc.py nvmf_subsystem_add_listener nqn.2016-06.sw.ha:ha2 -t tcp -a "40.40.40.101" -s 4420

@@ -18,3 +18,6 @@ sudo ./scripts/rpc.py bdev_ha_append_node Ha0 --node_id 1 --node-nsid 1 --partne
 sudo ./scripts/rpc.py bdev_ha_add_smb_witness Ha0 --smb_domain "" --smb_username "root" --smb_password "1234" --smb_server "192.168.0.131" --smb_share "smb_witness" --smb_path ""
 
 sudo ./scripts/rpc.py bdev_ha_set_nodemajority Ha0
+
+#listener for clients connections
+sudo ./scripts/rpc.py nvmf_subsystem_add_listener nqn.2016-06.sw.ha:ha0 -t tcp -a "40.40.40.102" -s 4420
