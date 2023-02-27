@@ -33,9 +33,11 @@ echo "Set debug log level on $dev device $node node..."
 spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
 set_log_lvl_cmd="sudo $spdk_path/scripts/rpc.py log_set_print_level DEBUG"
+set_log_flag="sudo $spdk_path/scripts/rpc.py log_set_flag bdev_ha_raft"
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")
 pass=$(get_dev_node_field $dev $node "ssh_ftp_pass")
 
 exe_on_host $host_addr $user $pass "$set_log_lvl_cmd"
+exe_on_host $host_addr $user $pass "$set_log_flag"
