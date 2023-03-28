@@ -34,6 +34,7 @@ spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
 ram_name=$(get_dev_node_field $dev $node "ram_bdev.name")
 nvme_name=$(get_dev_node_field $dev $node "nvme_bdev.name")
+aio_name=$(get_dev_node_field $dev $node "aio_bdev.name")
 #ram_name=$(get_node $1 "ram_bdev.name")
 #nvme_name=$(get_node $1 "nvme_bdev.name")
 
@@ -50,6 +51,11 @@ then
 
 	#sudo ./scripts/rpc.py bdev_nvme_attach_controller -b $(get_node $1 "nvme_bdev.prefix") -t PCIe -a $(get_node $1 "nvme_bdev.controller")
 	create_bdev_cmd="sudo $spdk_path/scripts/rpc.py bdev_nvme_attach_controller -b $nvme_prefix -t PCIe -a $nvme_ctrlr"
+elif [ "$aio_name" != "null" ]
+then
+	file=$(get_dev_node_field $dev $node "aio_bdev.file")
+	blk_size=$(get_dev_node_field $dev $node "aio_bdev.block_size")
+	create_bdev_cmd="sudo $spdk_path/scripts/rpc.py bdev_aio_create $file $aio_name $blk_size"
 fi
 
 dev_nqn=$(get_dev_field $dev "nqn")

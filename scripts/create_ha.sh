@@ -34,6 +34,7 @@ spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
 ram_name=$(get_dev_node_field $dev $node "ram_bdev.name")
 nvme_name=$(get_dev_node_field $dev $node "nvme_bdev.name")
+aio_name=$(get_dev_node_field $dev $node "aio_bdev.name")
 
 if [ "$ram_name" != "null" ]
 then
@@ -41,6 +42,9 @@ then
 elif [ "$nvme_name" != "null" ]
 then
 	node_bdev=$(get_dev_node_field $dev $node "nvme_bdev.name")
+elif [ "$aio_name" != "null" ]
+then
+	node_bdev=$(get_dev_node_field $dev $node "aio_bdev.name")
 fi
 
 create_ha_header_cmd="sudo $spdk_path/scripts/rpc.py bdev_ha_create_header $(get_dev_node_field $dev $node "header_path")"
