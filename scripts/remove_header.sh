@@ -33,9 +33,12 @@ echo "Removing $dev device $node node header..."
 header_path=$(get_dev_node_field $dev $node "header_path")
 rmv_header_cmd="rm $header_path"
 
+backup_path="$header_path.bk"
+rmv_back="rm $backup_path"
+
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")
 pass=$(get_dev_node_field $dev $node "ssh_ftp_pass")
 
 exe_on_host $host_addr $user $pass "$rmv_header_cmd"
-
+exe_on_host $host_addr $user $pass "$rmv_back"
