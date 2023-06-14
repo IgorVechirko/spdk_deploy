@@ -30,6 +30,12 @@
 				"prefix": "Nvme0",
 				"name": "Nvme0n1",
 				"controller": "0000:00:0e.0"
+			},
+			"aio_bdev":
+			{
+				"file": "",
+				"name": "aio_bdev",
+				"block_size": 512
 			}
 		},
 	
@@ -38,6 +44,8 @@
 			{
 				"id": 1,
 				"ns_id": 1,
+				"dedicated_core" : "",
+				"working_cores" : "",
 				"ssh_ftp_addr": "10.10.10.101",
 				"ssh_ftp_user": "root",
 				"ssh_ftp_pass": "1234",
