@@ -50,19 +50,27 @@ fi
 create_ha_header_cmd="sudo $spdk_path/scripts/rpc.py bdev_ha_create_header $(get_dev_node_field $dev $node "header_path")"
 create_ha_header_cmd="$create_ha_header_cmd --device_id $(get_dev_field $dev "id")"
 create_ha_header_cmd="$create_ha_header_cmd --device_nqn $(get_dev_field $dev "nqn")"
-create_ha_header_cmd="$create_ha_header_cmd --device_size $(get_dev_field $dev "size")"
-create_ha_header_cmd="$create_ha_header_cmd --uuid $(get_dev_field $dev "uuid")"
 create_ha_header_cmd="$create_ha_header_cmd --ha_creation_action create_new"
+
+if [ $(get_dev_field $dev "size") != "null" ]
+then
+	create_ha_header_cmd="$create_ha_header_cmd --device_size $(get_dev_field $dev "size")"
+fi
+
+if [ $(get_dev_field $dev "uuid") != "null" ]
+then
+	create_ha_header_cmd="$create_ha_header_cmd --uuid $(get_dev_field $dev "uuid")"
+fi
+
+if [ $(get_dev_node_field $dev $node "working_cores") != "null" ]
+then
+	create_ha_header_cmd="$create_ha_header_cmd --working_cores $(get_dev_node_field $dev $node "working_cores")"
+fi
+
 create_ha_header_cmd="$create_ha_header_cmd --local_node_id $node"
 #create_ha_header_cmd="$create_ha_header_cmd --local_node_type SYNC_REPLICA"
 create_ha_header_cmd="$create_ha_header_cmd --local_node_nsid $(get_dev_node_field $dev $node "ns_id")"
 create_ha_header_cmd="$create_ha_header_cmd --local_node_data_replica $node_bdev"
-
-workers_cores=$(get_dev_node_field $dev $node "workers_cores")
-if [ "$workers_cores" != "null" ]
-then
-	create_ha_header_cmd="$create_ha_header_cmd --workers_cores $workers_cores"
-fi
 
 channels=$(get_dev_node_field $dev $node "partners_channels")
 channels_count=$(echo $channels|jq 'length')
