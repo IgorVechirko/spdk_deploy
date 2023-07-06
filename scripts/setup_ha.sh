@@ -71,7 +71,8 @@ exe_on_host $host_addr $user $pass "$create_bdev_cmd"
 exe_on_host $host_addr $user $pass "$create_subsys_cmd"
 
 
-partners_channels=$(get_dev_node_field $dev $node "partners_channels")
+#To repeat auto tests behavior prevent create partners channel here. Let Ha create theys by him self
+:'partners_channels=$(get_dev_node_field $dev $node "partners_channels")
 channels_count=$(echo $partners_channels|jq 'length')
 for ch_idx in `seq 0 $(($channels_count-1))`
 do
@@ -86,7 +87,7 @@ do
 	add_partners_lst_cmd="$spdk_path/scripts/rpc.py $rpc_args"
 
 	exe_on_host $host_addr $user $pass "$add_partners_lst_cmd"
-done
+done'
 
 clients_channels=$(get_dev_node_field $dev $node "clients_channels")
 channels_count=$(echo $clients_channels|jq 'length')
