@@ -13,7 +13,7 @@
 			"bin_path": "/root/wc/sw_spdk/build/bin",
 			"bin_name": "nvmf_cpp_tgt",
 			"header_path": "/root/wc/ha/ram512_header.json",
-			"spdk_conf": "/root/wd/ha/spdk_conf.json",
+			"spdk_conf": "/root/wc/ha/spdk_conf.json",
 			"log_file": "/root/wc/ha/tgt_output.log",
 			"bin_ftp_path": "ftp://10.10.10.2/wc/sw_spdk/build/bin/",
 			"ftp_user": "root",
