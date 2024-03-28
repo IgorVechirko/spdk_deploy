@@ -4,10 +4,10 @@
 
 help()
 {
-	echo "\nPlease call:\n\t $0 <dev_name> <node_id>"
+	echo "\nPlease call:\n\t $0 <dev_name> <node_id> <flag_name>"
 }
 
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$1" ] || [ -z "$2" ]
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$1" ] || [ -z "$2" ] || [ -z "$3"]
 then
 	help
 	exit 1
@@ -27,13 +27,14 @@ fi
 
 dev=$1
 node=$2
+flag_name=$3
 
 echo "Set debug log level on $dev device $node node..."
 
 spdk_path=$(get_dev_node_field $dev $node "spdk_path")
 
 set_log_lvl_cmd="sudo $spdk_path/scripts/rpc.py log_set_print_level DEBUG"
-set_log_flag="sudo $spdk_path/scripts/rpc.py log_set_flag bdev_ha_raft"
+set_log_flag="sudo $spdk_path/scripts/rpc.py log_set_flag $flag_name"
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")
