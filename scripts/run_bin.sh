@@ -39,7 +39,7 @@ spdk_conf=$(get_dev_node_field $dev $node "spdk_conf")
 
 cleanup_cmd="$spdk_path/scripts/setup.sh cleanup"
 setup_cmd="sudo HUGEMEM=$huge_size $spdk_path/scripts/setup.sh"
-run_bin_cmd="sudo $bin_path/$bin_name -f $spdk_conf > $log_file 2>&1 &"
+run_bin_cmd="sudo $bin_path/$bin_name -m [0-2] --wait-for-rpc  -f $spdk_conf > $log_file 2>&1 &"
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
 user=$(get_dev_node_field $dev $node "ssh_ftp_user")

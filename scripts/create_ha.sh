@@ -51,7 +51,8 @@ create_ha_header_cmd="sudo $spdk_path/scripts/rpc.py bdev_ha_create_header $(get
 create_ha_header_cmd="$create_ha_header_cmd --device_id $(get_dev_field $dev "id")"
 create_ha_header_cmd="$create_ha_header_cmd --device_nqn $(get_dev_field $dev "nqn")"
 create_ha_header_cmd="$create_ha_header_cmd --ha_creation_action create_new"
-#create_ha_header_cmd="$create_ha_header_cmd --dedicated_core 2"
+#create_ha_header_cmd="$create_ha_header_cmd --emulate512"
+#create_ha_header_cmd="$create_ha_header_cmd --working_cores 2"
 
 if [ $(get_dev_field $dev "size") != "null" ]
 then

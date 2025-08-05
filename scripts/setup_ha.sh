@@ -60,7 +60,7 @@ fi
 
 dev_nqn=$(get_dev_field $dev "nqn")
 #sudo ./scripts/rpc.py nvmf_create_subsystem $(get_var "ha.nqn") -a -s SPDK00000000000001 -d SPDK_Controller1 --ana-reporting
-create_subsys_cmd="sudo $spdk_path/scripts/rpc.py nvmf_create_subsystem $dev_nqn -a -s SPDK00000000000001 -d SPDK_Controller1 --ana-reporting"
+create_subsys_cmd="sudo $spdk_path/scripts/rpc.py nvmf_create_subsystem $dev_nqn -a -s SPDK00000000000001 -d SPDK_Controller1  --ana-reporting --max-discard-size 8 --max-write-zeroes-size 8"
 
 
 host_addr=$(get_dev_node_field $dev $node "ssh_ftp_addr")
@@ -99,6 +99,7 @@ do
 	rpc_args="$rpc_args -t $(echo $channel|jq '.transport' -r)"
 	rpc_args="$rpc_args -a $(echo $channel|jq '.address' -r)"
 	rpc_args="$rpc_args -s $(echo $channel|jq '.port' -r)"
+	rpc_args="$rpc_args -n inaccessible"
 
 	#sudo ./scripts/rpc.py $rpc_args
 	add_clients_lst_cmd="$spdk_path/scripts/rpc.py $rpc_args"
